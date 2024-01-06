@@ -4,7 +4,8 @@ import openpyxl
 import requests
 import pandas as pd
 import urllib
-import flask
+
+api_key = os.getenv("API_KEY")
 
 def get_netflix_report():
     report_url = "https://assets.ctfassets.net/4cd45et68cgf/1HyknFM84ISQpeua6TjM7A/97a0a393098937a8f29c9d29c48dbfa8/What_We_Watched_A_Netflix_Engagement_Report_2023Jan-Jun.xlsx"
@@ -36,7 +37,7 @@ def search_movie(df):
               clean_movie_titles.append(i[0:position-2])
     for i in clean_movie_titles:
          movie_name_parsed = urllib.parse.quote_plus(i)
-         url = "https://www.omdbapi.com/?t={}".format(movie_name_parsed)+"&apikey=de188342"
+         url = "https://www.omdbapi.com/?t={}".format(movie_name_parsed)+"&apikey={api_key}"
          response = requests.get(url)
          teste_dict[i]=response.json()
     return None
